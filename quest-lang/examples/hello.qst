@@ -1,0 +1,13 @@
+~ hello.qst — Your first QUEST program ~
+
+equip hero = "Aldric"
+equip level = 5
+
+announce "Welcome to the realm, " + hero + "!"
+announce "You are level " + level
+
+embark level >= 5 {
+  announce "You are experienced enough to enter the dungeon."
+} otherwise {
+  announce "Train more before you venture forth."
+}

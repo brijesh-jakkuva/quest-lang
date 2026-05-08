@@ -1,0 +1,30 @@
+~ vault.qst — Demonstrates NullTreasureException ~
+
+guild NullTreasureException {
+  initiate(chestName) {
+    self.type    = "NullTreasureException"
+    self.message = "[NullTreasureException] You reached into '" + chestName + "' but found nothing!"
+    self.chest   = chestName
+  }
+}
+
+quest openChest(chest) {
+  embark chest == null {
+    perish summon NullTreasureException("unknown")
+  }
+  reward chest
+}
+
+quest claimTreasure(chest, label) {
+  survive {
+    equip item = openChest(chest)
+    announce "You claim: " + item
+  } fallen(curse) {
+    announce curse.message
+    announce "The chest '" + label + "' held only shadow."
+  }
+}
+
+claimTreasure("Sword of Dawn", "Oak Chest")
+claimTreasure(null, "Cursed Coffer")
+claimTreasure("Ancient Map", "Iron Lockbox")

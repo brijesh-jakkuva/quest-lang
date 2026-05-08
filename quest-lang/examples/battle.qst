@@ -1,0 +1,46 @@
+~ battle.qst — A real skirmish with true randomness ~
+
+guild Hero {
+  initiate(name) {
+    self.name = name
+    self.hp = 100
+    self.attack = 18
+  }
+
+  quest smite(target) {
+    equip dmg = roll(self.attack)
+    target.hp = target.hp - dmg
+    announce self.name + " strikes for " + dmg + " damage!"
+  }
+}
+
+guild Monster {
+  initiate(name, hp) {
+    self.name = name
+    self.hp = hp
+    self.attack = 12
+  }
+
+  quest claw(target) {
+    equip dmg = roll(self.attack)
+    target.hp = target.hp - dmg
+    announce self.name + " claws back for " + dmg + " damage!"
+  }
+}
+
+equip hero    = summon Hero("Aldric")
+equip monster = summon Monster("Cave Troll", 40)
+
+announce "--- Battle begins! ---"
+
+patrol hero.hp > 0 && monster.hp > 0 {
+  hero.smite(monster)
+  embark monster.hp <= 0 { retreat }
+  monster.claw(hero)
+}
+
+embark hero.hp > 0 {
+  announce hero.name + " is victorious! Monster hp: " + monster.hp
+} otherwise {
+  announce hero.name + " has fallen..."
+}
