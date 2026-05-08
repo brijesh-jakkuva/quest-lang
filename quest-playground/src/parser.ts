@@ -45,7 +45,6 @@ export class Parser {
   }
 
   private peek(): Token { return this.tokens[this.pos]!; }
-  private prev(): Token { return this.tokens[this.pos - 1]!; }
   private advance(): Token { return this.tokens[this.pos++]!; }
   private isAtEnd(): boolean { return this.peek().type === "EOF"; }
 
